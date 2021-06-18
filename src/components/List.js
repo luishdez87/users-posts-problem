@@ -6,32 +6,22 @@ const List = () => {
 
   const { posts, users } = useApi();
 
-  const mappedData = () => {
-    return posts.map(post => {
-      const user = users.find(u => u.id === post.userId);
-      return user ? { user, ...post } : post 
-    });
-  }
-  
+  console.log(posts, users);
   return (
     <>
       <div>list</div>
-      {mappedData().length ? mappedData().map(item => (
-        <div className="flex grid" key={item.id}>
-          <p>
-            {item.id}
-          </p>
-          <p>
-            {item.user?.name}
-          </p>
-          <p>
-            {item.title}
-          </p>
-          <p>
-            {item.body}
-          </p>
+      {posts.map(post => (
+        <div className="flex grid" key={post.id}>
+          <p> {post.id} </p>
+          {users.map(user => (
+            <p key={user.id}>
+              {user.id === post.userId && <p> {user.name} </p>} 
+            </p>
+          ))}
+          <p> {post.title} </p>
+          <p> {post.body} </p>
         </div>
-      )) : <p>Loading...</p> }
+      ))}
     </>
   );
 }
